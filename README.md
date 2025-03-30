@@ -4,7 +4,7 @@ This plugin enhances **Adminer** by simplifying the login process for SQLite dat
 
 ## Features
 
-- **Simplified Login**: works out of the box
+- **Simplified Login**: works out of the box, for demonstration [adminer.php](https://github.com/vrana/adminer/releases/download/v5.1.0/adminer-5.1.0.php) (V 5.10.0) is included as well. Feel free to get newest version.
 - **Password Protection**: Stores the hashed password securely in `CSqlite.pwd`.
 - **Automatic Database Detection**: Recursively scans a specified directory for `*.sqlite` or `*.db` files.
 
@@ -17,8 +17,6 @@ This plugin enhances **Adminer** by simplifying the login process for SQLite dat
      $vPath = "/var/www/global"; // Set your desired path here
      ```
 3. **Set File Permissions**:
-   ```sh
-   ```
    Ensure the web server has write access to the plugins directory (use your path):
    ```sh
    chmod 775 /var/www/global/htdocs/adminer/plugins
@@ -39,7 +37,7 @@ This plugin enhances **Adminer** by simplifying the login process for SQLite dat
 
 ## Usage
 
-1. Open Adminer with the plugin in your browser.
+1. Open Adminer with the plugin in your browser. https://[domain/path]/adminer/sqlite.php
 
 ![Login Screen](readme/login-screen.webp)  
 
@@ -58,7 +56,9 @@ This plugin enhances **Adminer** by simplifying the login process for SQLite dat
 
 ## Note
 
-If no databases are found, check the path setting in `CSqlite.php` and file permissions.
+- If no databases are found, check the path setting in `CSqlite.php` and file permissions.
+- Call to https://[domain/path]/adminer/adminer.php opens unchanged adminer version
+- You might want to set a symlink index.php
 
 ## License
 
