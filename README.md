@@ -1,6 +1,6 @@
 # Adminer SQLite Plugin
 
-This plugin enhances **Adminer** by simplifying the login process for SQLite databases. Instead of the standard login form, users only need to select a SQLite database and enter a password.
+This plugin enhances **[Adminer](https://www.adminer.org/)** by simplifying the login process for SQLite databases. Instead of the standard login form, users only need to select a SQLite database and enter a password.
 
 ## Features
 
@@ -63,8 +63,4 @@ This plugin enhances **Adminer** by simplifying the login process for SQLite dat
 ## License
 
 MIT License
-
----
-
-Project URL: [GitHub Repository](https://github.com/rohusan/adminer-plugin-sqlite)
 
