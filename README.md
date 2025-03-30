@@ -4,7 +4,7 @@ This plugin enhances **[Adminer](https://www.adminer.org/)** by simplifying the 
 
 ## Features
 
-- **Simplified Login**: works out of the box, for demonstration [adminer.php](https://github.com/vrana/adminer/releases/download/v5.1.0/adminer-5.1.0.php) (V 5.10.0) is included as well. Feel free to get newest version.
+- **Simplified Login**: works out of the box, for demonstration [adminer.php](https://github.com/vrana/adminer/releases/download/v5.1.0/adminer-5.1.0.php) (V 5.1.0) is included as well. Feel free to get newest version.
 - **Password Protection**: Stores the hashed password securely in `CSqlite.pwd`.
 - **Automatic Database Detection**: Recursively scans a specified directory for `*.sqlite` or `*.db` files.
 
