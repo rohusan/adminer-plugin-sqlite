@@ -5,7 +5,16 @@
 		$aLoad = [];
 
 		require "plugins/CSqlite.php";
-		$aLoad[] = new CSqlite();
+		# overwrite defaults
+		$aOpt = [
+			# root path to search for files
+			#'vPath' => '/var/www/global'
+			# we search for *.sqlite / *.db files
+			#'vSearch' => "#(.+\.sqlite|.+\.db)$#",
+			# write access!
+			#'vPwdFile' => __DIR__ . "/CSqlite.pwd",
+		];
+		$aLoad[] = new CSqlite($aOpt);
 
 		class AdminerCustomization extends Adminer\Plugins
 		{

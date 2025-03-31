@@ -1,13 +1,22 @@
 <?php
 class CSqlite
 {
-	# start searching from this path
-	protected $vPath = "/var/www/global";
-	# we search for *.sqlite / *.db files
-	protected $vSearch = "#(.+\.sqlite|.+\.db)$#";
+	# default settings
+	protected $aConf = [
+		# start searching from this path
+		'vPath' => "/var/www/global",
+		# we search for *.sqlite / *.db files
+		'vSearch' => "#(.+\.sqlite|.+\.db)$#",
+		# write access!
+		'vPwdFile' => __DIR__ . "/CSqlite.pwd",
+	];
 
-	# write access!
-	protected $vPwdFile = __DIR__ . "/CSqlite.pwd";
+	#----------------------------------------------------------------
+	public function __construct($aOpt=[])
+	#----------------------------------------------------------------
+	{
+		$this->aConf = $aOpt + $this->aConf;
+	}
 
 
 	#################################################################
@@ -64,7 +73,7 @@ EOD;
 		foreach ( $aFile as $vFile )
 		{
 			$vSelect = $vSelected == $vFile ? 'selected' : '';
-			$vTxt = str_replace($this->vPath, '', $vFile);
+			$vTxt = str_replace($this->aConf['vPath'], '', $vFile);
 			$vOption .= "<option value='$vFile'{$vSelected}>$vTxt</option>";
 		}
 		# No db files found, use text input
@@ -78,13 +87,12 @@ EOD;
 	protected function _mScanDbFile()
 	#----------------------------------------------------------------
 	{
-		$oDir = new RecursiveDirectoryIterator($this->vPath);
+		$oDir = new RecursiveDirectoryIterator($this->aConf['vPath']);
 		$oIterator = new RecursiveIteratorIterator($oDir);
-		$oFile = new RegexIterator($oIterator, $this->vSearch, RegexIterator::GET_MATCH);
+		$oFile = new RegexIterator($oIterator, $this->aConf['vSearch'], RegexIterator::GET_MATCH);
 		$aFound = [];
 		foreach($oFile as $vFile)
 		{
-
 			$aFound = array_merge($aFound, $vFile);
 		}
 		return array_unique($aFound);
@@ -97,7 +105,7 @@ EOD;
 		$aFile = $this->_mScanDbFile();
 		foreach ( $aFile as $vFile )
 		{
-			$vTxt = str_replace($this->vPath, '', $vFile);
+			$vTxt = str_replace($this->aConf['vPath'], '', $vFile);
 			$aDatabase[$vFile] = $vTxt;
 		}
 		return $aDatabase;
@@ -115,11 +123,11 @@ EOD;
 		$vPwd = Adminer\get_password();
 
 		# case 1: pwd file exists
-		if ( file_exists($this->vPwdFile) )
+		if ( file_exists($this->aConf['vPwdFile']) )
 		{
-			if ( ! $vPwdHash = file_get_contents($this->vPwdFile) )
+			if ( ! $vPwdHash = file_get_contents($this->aConf['vPwdFile']) )
 			{
-				throw new Error("Can't find password file ($this->vPwdFile)");
+				throw new Error("Can't find password file ($this->aConf['vPwdFile'])");
 			}
 			password_verify($vPwd, $vPwdHash) && $vPwd = '';
 		}
@@ -134,8 +142,8 @@ EOD;
 		else
 		{
 			$vPwdHash = password_hash($vPwd, PASSWORD_DEFAULT);
-			file_put_contents($this->vPwdFile, $vPwdHash) ||
-				throw new Error("Can't write password file ($this->vPwdFile)");
+			file_put_contents($this->aConf['vPwdFile'], $vPwdHash) ||
+				throw new Error("Can't write password file ($this->aConf['vPwdFile'])");
 			$vPwd = '';
 		}
 		return [Adminer\SERVER, $_GET["username"], $vPwd];
