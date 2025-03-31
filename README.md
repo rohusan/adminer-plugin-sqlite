@@ -8,7 +8,7 @@ This plugin enhances **[Adminer](https://www.adminer.org/)** by simplifying the 
 - **Password Protection**: Stores the hashed password securely in `CSqlite.pwd`.
 - **Automatic Database Detection**: Recursively scans a specified directory for `*.sqlite` or `*.db` files.
 - **Easy Configuration**: comes with defaults that can easily be overwritten.
-- **Sample Database**: Playground `chinook.db` is included, [DB from sqlitetutorial.net](https://www.sqlitetutorial.net/)sqlite-sample-database/
+- **Sample Database**: Playground `chinook.db` is included, [sample db from sqlitetutorial.net](https://www.sqlitetutorial.net/sqlite-sample-database/)
 
 ## Installation
 
@@ -27,10 +27,11 @@ This plugin enhances **[Adminer](https://www.adminer.org/)** by simplifying the 
       ];
      ```
 3. **Set File Permissions**:
-   Ensure the web server has write access to `vPath`, `vPwdFile`, and the database locations:
+   Ensure the web server has write access to file/directory of `vPwdFile` and databases:
    ```sh
    chmod 775 /var/www/global/htdocs/adminer/plugins
-   chown www-data:www-data /var/www/global/htdocs/adminer/plugins
+   chgrp www-data /var/www/global/htdocs/adminer/plugins
+   …
    ```
 
 ## Password Management
