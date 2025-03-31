@@ -67,9 +67,9 @@ This plugin enhances **[Adminer](https://www.adminer.org/)** by simplifying the 
 
 ## Note
 
-- If no databases are found, check the path setting in `CSqlite.php` and file permissions.
-- A direct call to `https://[domain/path]/adminer/adminer.php` opens the unchanged Adminer version.
-- You might want to set a symlink `index.php`.
+- If no databases are found, check the path setting ($aOpt['vPath']) in `sqlite.php` and file permissions.
+- A direct call to `https://[domain]/[path]/adminer/adminer.php` opens the unchanged Adminer version.
+- You might want to set a symlink `index.php` to sqlite.php.
 
 ## License
 
