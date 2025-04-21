@@ -142,8 +142,9 @@ EOD;
 		else
 		{
 			$vPwdHash = password_hash($vPwd, PASSWORD_DEFAULT);
-			file_put_contents($this->aConf['vPwdFile'], $vPwdHash) ||
+			if (!file_put_contents($this->aConf['vPwdFile'], $vPwdHash)) {
 				throw new Error("Can't write password file ($this->aConf['vPwdFile'])");
+			}
 			$vPwd = '';
 		}
 		return [Adminer\SERVER, $_GET["username"], $vPwd];
