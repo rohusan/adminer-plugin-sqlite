@@ -116,7 +116,7 @@ EOD;
 	#################################################################
 
 	#----------------------------------------------------------------
-	public function credentials()
+	protected function _credentials()
 	#----------------------------------------------------------------
 	{
 		# clear text password (from post or session)
@@ -127,7 +127,7 @@ EOD;
 		{
 			if ( ! $vPwdHash = file_get_contents($this->aConf['vPwdFile']) )
 			{
-				throw new Error("Can't find password file ($this->aConf['vPwdFile'])");
+				throw new Error("Can't find password file ({$this->aConf['vPwdFile']})");
 			}
 			password_verify($vPwd, $vPwdHash) && $vPwd = '';
 		}
@@ -142,8 +142,10 @@ EOD;
 		else
 		{
 			$vPwdHash = password_hash($vPwd, PASSWORD_DEFAULT);
-			file_put_contents($this->aConf['vPwdFile'], $vPwdHash) ||
-				throw new Error("Can't write password file ($this->aConf['vPwdFile'])");
+			if ( ! file_put_contents($this->aConf['vPwdFile'], $vPwdHash) )
+			{
+				throw new Error("Can't write password file ({$this->aConf['vPwdFile']})");
+			}
 			$vPwd = '';
 		}
 		return [Adminer\SERVER, $_GET["username"], $vPwd];
@@ -156,4 +158,24 @@ EOD;
 		if ($vPwd != "") { return true; }
 	}
 
+
+	#################################################################
+	# Helper Stuff
+	#################################################################
+
+	#----------------------------------------------------------------
+	public function credentials()
+	#----------------------------------------------------------------
+	{
+		try { return $this->_credentials(); }
+		catch(Error $e) { $this->_mError($e->getMessage()); }
+	}
+	
+	#----------------------------------------------------------------
+	protected function _mError($vMsg)
+	#----------------------------------------------------------------
+	{
+		die ("<h3 style='color: red;'>Error occured<br>$vMsg</h3>");
+	}
+	
 }
